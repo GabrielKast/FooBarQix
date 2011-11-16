@@ -17,27 +17,36 @@ main([From_s, To_s]) ->
         From = list_to_integer(From_s),
         To = list_to_integer(To_s),
         %% Assert that...
-        true = (From=<To),
+        true = (From=<To 
+                andalso is_valid_param(From) 
+                andalso is_valid_param(To) ),
         %% Afficher le résultat
         [ io:fwrite("~p  ~s~n", [N, qix(N)]) 
           || N <- lists:seq(From, To) ]
     catch _:_ -> usage()
     end;
-%% Résultat pour un chiffre
+%% Résultat pour un nombre
 main([String]) ->
     try
         N = list_to_integer(String),
+        %% Assert that...
+        true = is_valid_param(N),
         Result = qix(N),
         io:format("~s\n", [Result])
     catch _:_ -> usage()
     end;
-main(_) ->
-    usage().
+%% Main case
+main(["usage"]) -> usage();
+main(_) -> main(["1", "100"]).
+
 usage() ->
     io:format("usage: foobar  <<integer>>\n"),
     io:format("usage: foobar  <<borne inférieure>> <<borne supérieure>>\n"),
     io:format("Pour passer la série de tests: foobar  test \n"),
     halt(1).
+
+is_valid_param(N) when N>0 andalso N=<100 -> true;
+is_valid_param(_) ->false.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %% Fin de la plomberie

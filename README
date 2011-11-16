@@ -15,4 +15,6 @@ Vu la simplicité du projet j'en ai fait un script executable.
 * Pour voir le résultat envoyé pour un nombre : foobar <<Chiffre testé>>
 * Pour voir le résultat sur une séquence : foobar <<Chiffre bas>> <<Chiffre haut>>
 
-Le code a été vite, dans un esprit ludique.
+Le code a été vite écrit, dans un esprit ludique.
+La doc et les commentaires aussi :)
+
