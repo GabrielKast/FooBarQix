@@ -11,9 +11,13 @@ cf. http://www.erlang.org/doc/man/escript.html
 
 Vu la simplicité du projet j'en ai fait un script executable.
 
+* Pour lancer le programme : ./foobar  : renvoie tous les nombres transformés de 1 à 100.
 * Pour lancer les tests : foobar test
+* Pour lancer le howto : foobar usage
 * Pour voir le résultat envoyé pour un nombre : foobar <<Chiffre testé>>
-* Pour voir le résultat sur une séquence : foobar <<Chiffre bas>> <<Chiffre haut>>
+* Pour voir le résultat sur une séquence : foobar <<Chiffre bas>> <<Chiffre haut>> 
+
+Les nombres doivent être entre 1 et 100
 
 Le code a été vite écrit, dans un esprit ludique.
 La doc et les commentaires aussi :)
