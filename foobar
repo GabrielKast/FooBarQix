@@ -11,6 +11,7 @@
 %% Lancer les tests
 main(["test"]) -> ok  = test(),
                   io:fwrite("tests ok\n");
+
 %% Tous les résultats de.. à...
 main([From_s, To_s]) ->
     try
@@ -21,7 +22,7 @@ main([From_s, To_s]) ->
                 andalso is_valid_param(From) 
                 andalso is_valid_param(To) ),
         %% Afficher le résultat
-        [ io:fwrite("~p  ~s~n", [N, qix(N)]) 
+        [ io:fwrite("~p ~s~n", [N, qix(N)]) 
           || N <- lists:seq(From, To) ]
     catch _:_ -> usage()
     end;
@@ -40,12 +41,16 @@ main(["usage"]) -> usage();
 main(_) -> main(["1", "100"]).
 
 usage() ->
-    io:format("usage: foobar  <<integer>>\n"),
-    io:format("usage: foobar  <<borne inférieure>> <<borne supérieure>>\n"),
-    io:format("Pour passer la série de tests: foobar  test \n"),
+    io:format("usage:\n"),
+    io:format("foobar: voir tous les nombre de 1 à 100  \n"),
+    io:format("foobar  <<integer>> : pour un nombre\n"),
+    io:format("foobar  <<borne inférieure>> <<borne supérieure>> : pour une
+série de nombres entre 1 et 100 \n"),
+    io:format("foobar test : Pour passer la série de tests:  \n"),
     halt(1).
 
-is_valid_param(N) when N>0 andalso N=<100 -> true;
+%% is_valid_param(N) when N>0 andalso N=<100 -> true;
+is_valid_param(N) when N>0 -> true;
 is_valid_param(_) ->false.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -60,12 +65,13 @@ qix(N) when is_integer(N) ->
 
 do_qix(N, [], "") -> integer_to_list(N);
 do_qix(_, [], Result) -> lists:flatten (Result);
-do_qix(N, [Cifer|Rest], Result) ->
+do_qix(N, [Cifer|Rest], Accumulator) ->
     Computed = divide(N, Cifer) ++ transform(N, Cifer),
-    reduce_result(Computed, N, Rest, Result).
+    New_accumulator = reduce_result(Computed, Accumulator),
+    do_qix(N, Rest, New_accumulator).
 
-reduce_result([], N, Rest, Result)-> do_qix(N, Rest, Result);
-reduce_result(Yell_it, N, Rest, Result)-> do_qix(N, Rest, [Yell_it | Result]).
+reduce_result([], Result)-> Result;
+reduce_result(Yell_it, Result)-> [Yell_it | Result].
 
 transform(N, Cifer) when is_integer(N)-> transform(integer_to_list(N), Cifer);
 transform(N, Cifer) -> [ sayitloud(Cifer) || Char <- N, Char - $0 =:=Cifer].
