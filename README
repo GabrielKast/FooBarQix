@@ -1,0 +1,18 @@
+Une petite réponse au concours FooBarQix lancé par David Gageot et Jean-Laurent Morhlon
+http://www.code-story.net/2011/11/16/foobarqix.html
+
+Ecrit
+
+Prérequis : Avoir escript sur sa machine. 
+"escript provides support for running short Erlang programs without having to compile them first and an easy way to retrieve the command line arguments."
+
+cf. http://www.erlang.org/doc/man/escript.html
+
+
+Vu la simplicité du projet j'en ai fait un script executable.
+
+* Pour lancer les tests : foobar test
+* Pour voir le résultat envoyé pour un nombre : foobar <<Chiffre testé>>
+* Pour voir le résultat sur une séquence : foobar <<Chiffre bas>> <<Chiffre haut>>
+
+Le code a été vite, dans un esprit ludique.

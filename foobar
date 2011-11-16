@@ -1,0 +1,93 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+%%! -smp enable -sname FooBarQix
+
+-export ([qix/1]).
+
+-export ([divide/2]).
+-export ([transform/2]).
+-export ([test/0]).
+
+%% Lancer les tests
+main(["test"]) -> ok  = test(),
+                  io:fwrite("tests ok\n");
+%% Tous les résultats de.. à...
+main([From_s, To_s]) ->
+    try
+        From = list_to_integer(From_s),
+        To = list_to_integer(To_s),
+        %% Assert that...
+        true = (From=<To),
+        %% Afficher le résultat
+        [ io:fwrite("~p  ~s~n", [N, qix(N)]) 
+          || N <- lists:seq(From, To) ]
+    catch _:_ -> usage()
+    end;
+%% Résultat pour un chiffre
+main([String]) ->
+    try
+        N = list_to_integer(String),
+        Result = qix(N),
+        io:format("~s\n", [Result])
+    catch _:_ -> usage()
+    end;
+main(_) ->
+    usage().
+usage() ->
+    io:format("usage: foobar  <<integer>>\n"),
+    io:format("usage: foobar  <<borne inférieure>> <<borne supérieure>>\n"),
+    io:format("Pour passer la série de tests: foobar  test \n"),
+    halt(1).
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fin de la plomberie
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Début du code métier
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+qix(N) when is_integer(N) -> 
+    Cifers = lists:reverse([ 3, 5, 7 ]),
+    do_qix (N, Cifers, "").
+
+do_qix(N, [], "") -> integer_to_list(N);
+do_qix(_, [], Result) -> lists:flatten (Result);
+do_qix(N, [Cifer|Rest], Result) ->
+    Computed = divide(N, Cifer) ++ transform(N, Cifer),
+    reduce_result(Computed, N, Rest, Result).
+
+reduce_result([], N, Rest, Result)-> do_qix(N, Rest, Result);
+reduce_result(Yell_it, N, Rest, Result)-> do_qix(N, Rest, [Yell_it | Result]).
+
+transform(N, Cifer) when is_integer(N)-> transform(integer_to_list(N), Cifer);
+transform(N, Cifer) -> [ sayitloud(Cifer) || Char <- N, Char - $0 =:=Cifer].
+
+divide(JamesB, ImBlackAmImProud) when JamesB rem ImBlackAmImProud=:=0 -> 
+    sayitloud(ImBlackAmImProud);
+divide(_, _) -> []. 
+
+sayitloud(3)-> "Foo";
+sayitloud(5) ->"Bar";
+sayitloud(7) ->"Qix".
+
+%%%%%%%%%%
+%% Tests
+%%%%%%%%%%
+test()->
+    "Foo" = divide(3,3),
+    "" = [],
+    "Bar" = divide(5,5),
+    "" = divide(13,3),
+    "Foo" = divide(33,3),
+    "Foo" = divide(777,3),
+    "Qix" = divide(777,7),
+    
+    ["Foo", "Foo"] = transform(33,3),
+    ["Qix", "Qix", "Qix"] = transform(777,7),
+
+    "Foo" = qix(13),
+    "FooQixQixQixQix" = qix(777),
+    "FooFooFoo" = qix(33),
+    ok.
+    
+    
+     
