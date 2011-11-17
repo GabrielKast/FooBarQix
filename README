@@ -1,16 +1,20 @@
-Une petite réponse au concours FooBarQix lancé par David Gageot et Jean-Laurent Morhlon
+Deux petites réponses au concours FooBarQix lancé par David Gageot et Jean-Laurent Morhlon
 http://www.code-story.net/2011/11/16/foobarqix.html
+- Une en scala
+- Une en Erlang
 
-Ecrit
-
-Prérequis : Avoir escript sur sa machine. 
+Prérequis : Avoir escript sur sa machine.
 "escript provides support for running short Erlang programs without having to compile them first and an easy way to retrieve the command line arguments."
 
 cf. http://www.erlang.org/doc/man/escript.html
 
+Et pour la version Scala... Avoir Scala. Si si je vous jure
 
-Vu la simplicité du projet j'en ai fait un script executable.
 
+
+
+Version Erlang
+Vu la simplicité du projet j'ai fait un script executable.
 * Pour lancer le programme : ./foobar  : renvoie tous les nombres transformés de 1 à 100.
 * Pour lancer les tests : foobar test
 * Pour lancer le howto : foobar usage
@@ -22,3 +26,10 @@ Les nombres doivent être entre 1 et 100
 Le code a été vite écrit, dans un esprit ludique.
 La doc et les commentaires aussi :)
 
+Version Scala
+* D'abord compiler le programme
+scalac foobar.scala
+* Puis lancer le programme : 
+scala foobar : renvoie tous les nombres transformés de 1 à 100
+
+scala foobar_test : joue les tests
